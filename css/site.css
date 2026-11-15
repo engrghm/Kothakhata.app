@@ -1,0 +1,171 @@
+/* Hallmark · shape: Workbench (hand-drawn, no Node) · genre: modern-minimal · theme: Dose (deal: manual) · job: try · dose: white
+ * hero: Stage · nav: edge-aligned, a wordmark and one action · footer: a mast, the wordmark over two links · imagery: the product, live in frames on sample data · signature: the week as seven tinted compartments with the live app standing in it
+ * axes: paper light 97.6, accent teal 176, grotesk over Kalpurush, radius 10/14/28 · contrast: checked by hand · fold: checked at 1280 x 800 · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V4 · weakest: P, the page argues only that speaking beats typing; cut a testimonial band and a pricing row that had no facts behind them */
+/* Hallmark · waive 47b · five plain rounded screens, each the live app on sample data · the app itself is what this page offers, so its own screens carry every section */
+/* Hallmark · waive 44c · Stage posture, the live app frame and week tray run to y 830 of 900 · the measure skips the framed app, which is the hero visual */
+/* Hallmark · waive 79 · the framed app and its tray fill the hero to within 70px of the fold · the gap is counted from the text column only */
+
+:root {
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1.0625rem; --text-lg: 1.25rem; --text-xl: 1.5625rem;
+  --text-display: clamp(2.5rem, 3.6vw + 1rem, 4.5rem); --text-section: clamp(2rem, 2.2vw + 1rem, 3.25rem); --text-title: clamp(1.375rem, 0.75vw + 1rem, 1.75rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --container: 1360px; --gutter: 64px; --gap-columns: 32px; --section-gap: 144px; --section-gap-s: 120px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); scroll-padding-top: var(--space-3xl); scroll-behavior: smooth; }
+body { margin: 0; background: var(--color-paper) var(--grain); color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-md); line-height: 1.6; -webkit-font-smoothing: antialiased; caret-color: var(--color-accent); }
+::selection { background: color-mix(in oklab, var(--color-accent) 24%, transparent); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--tracking-display); line-height: 1.08; overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+html[lang="bn"] :is(h1, h2, h3) { letter-spacing: 0; line-height: 1.32; }
+h1 { font-size: var(--text-display); max-width: 14ch; }
+h2 { font-size: var(--text-section); max-width: 22ch; }
+h3 { font-size: var(--text-title); line-height: 1.25; }
+p { margin: 0; text-wrap: pretty; max-width: 60ch; }
+dl, dd { margin: 0; }
+img, svg, iframe { display: block; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip:focus { position: fixed; top: var(--space-xs); left: var(--space-xs); width: auto; height: auto; clip-path: none; z-index: var(--z-modal); background: var(--color-surface); padding: var(--space-xs) var(--space-md); border-radius: var(--radius-input); }
+.lead { font-size: var(--text-lead); line-height: 1.5; color: var(--color-ink-2); max-width: 30ch; }
+.note { font-size: var(--text-sm); color: var(--color-muted); }
+.figure { font-variant-numeric: tabular-nums; }
+
+/* ---------- controls: moulded plastic, one green primary ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 var(--space-lg); border-radius: var(--radius-input); font-weight: 500; font-size: var(--text-md); text-decoration: none; white-space: nowrap; cursor: pointer; border: 0; transition: transform var(--dur-micro) var(--ease-out); }
+.btn--primary { background: var(--color-accent); color: var(--color-accent-ink); box-shadow: 0 0 0 1px var(--color-accent-deep), 0 3px 0 var(--color-accent-deep), 0 14px 22px -14px var(--color-accent-deep); }
+.btn--clear { background: transparent; color: var(--color-ink); box-shadow: inset 0 1px 0 var(--glint), var(--rim); }
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: translateY(3px); }
+.btn--primary:active { box-shadow: 0 0 0 1px var(--color-accent-deep); }
+.btn--clear:active { box-shadow: 0 0 0 1px var(--color-rule); }
+.key { display: inline-flex; white-space: nowrap; align-items: center; min-height: 44px; padding: 0 var(--space-md); border: 0; border-radius: var(--radius-input); background: var(--color-surface); box-shadow: inset 0 1px 0 var(--glint), 0 0 0 1px var(--color-rule), 0 2px 0 var(--color-rule); font-size: var(--text-sm); font-weight: 500; cursor: pointer; text-align: left; transition: transform var(--dur-micro) var(--ease-out); }
+.key:active { transform: translateY(2px); box-shadow: 0 0 0 1px var(--color-rule); }
+.key[aria-pressed="true"] { background: var(--color-accent-soft); box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-accent) 45%, transparent); }
+
+/* ---------- nav ---------- */
+.nav { position: sticky; top: 0; z-index: var(--z-sticky-nav); background: color-mix(in oklab, var(--color-paper) 90%, transparent); backdrop-filter: blur(10px); }
+.nav-in { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.wordmark { display: inline-flex; align-items: center; gap: var(--space-xs); font-family: var(--font-display); font-weight: 700; font-size: var(--text-xl); text-decoration: none; }
+.wordmark img { border-radius: 9px; }
+.nav-actions { display: flex; align-items: center; gap: var(--space-sm); }
+.nav .btn { height: 44px; padding: 0 var(--space-md); font-size: var(--text-sm); }
+
+/* ---------- hero: Stage ---------- */
+.hero { position: relative; min-height: calc(100svh - 72px); display: grid; align-items: center; padding-block: var(--space-lg) var(--space-xl); }
+.window-light { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.window-light i { position: absolute; top: -20%; height: 150%; width: 12%; background: var(--light); filter: blur(28px); transform: skewX(-22deg); opacity: 0.9; }
+.window-light i:nth-child(1) { left: 34%; } .window-light i:nth-child(2) { left: 50%; width: 9%; } .window-light i:nth-child(3) { left: 63%; width: 14%; }
+.hero-in { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--space-2xl); align-items: center; }
+.hero-text { display: grid; gap: var(--space-lg); justify-items: start; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.stage { --stage-h: clamp(520px, 80svh, 760px); position: relative; margin: 0; height: var(--stage-h); display: grid; justify-items: center; align-content: start; }
+.tray { position: absolute; inset: auto 0 34px 0; height: 46%; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-xs); padding: var(--space-sm); border-radius: var(--radius-screen); background: var(--color-paper-3); box-shadow: inset 0 2px 6px color-mix(in oklab, var(--color-ink) 14%, transparent); }
+.tray span { --t: var(--p-thu); display: flex; align-items: flex-end; justify-content: center; padding-bottom: var(--space-sm); border-radius: var(--radius-card); font-size: var(--text-sm); font-weight: 500; color: var(--color-ink-2); background: linear-gradient(color-mix(in oklab, var(--glint) 32%, transparent), transparent 18%), color-mix(in oklab, var(--t) 62%, transparent); box-shadow: inset 0 1.5px 0 var(--glint), inset 0 -24px 36px -28px color-mix(in oklab, var(--t) 45%, var(--color-ink)), 0 18px 24px -18px color-mix(in oklab, var(--t) 70%, var(--color-ink)); }
+.screen { position: relative; border: 0; border-radius: var(--radius-screen); background: var(--color-surface); box-shadow: 0 0 0 1px var(--color-rule), var(--shadow-lift); max-width: 100%; }
+.stage .screen { height: calc(var(--stage-h) - 58px); width: 340px; }
+.screen--still { pointer-events: none; }
+.stage figcaption { position: absolute; bottom: 0; font-size: var(--text-sm); color: var(--color-muted); }
+
+/* ---------- sections ---------- */
+main > section + section { margin-top: var(--section-gap); }
+.head { display: grid; gap: var(--space-md); margin-bottom: var(--space-xl); }
+
+/* try: a first step in a tray, the product answering live beside it */
+.try-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: start; }
+.sunk { display: grid; gap: var(--space-md); padding: var(--space-xl); border-radius: var(--radius-card); background: color-mix(in oklab, var(--p-wed) 55%, var(--color-paper)); box-shadow: inset 0 2px 6px color-mix(in oklab, var(--color-ink) 14%, transparent), inset 0 -1px 0 var(--glint); }
+.sunk label { font-weight: 500; }
+.say-row { display: flex; gap: var(--space-sm); }
+.say-row input { flex: 1; min-width: 0; height: 52px; padding: 0 var(--space-md); border: 1px solid var(--color-muted); border-radius: var(--radius-input); background: var(--color-surface); font-size: var(--text-lg); }
+.say-row input:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -1px; }
+.mic { position: relative; flex: none; width: 52px; height: 52px; display: grid; place-items: center; border: 0; border-radius: var(--radius-input); cursor: pointer; background: var(--color-voice); color: var(--color-voice-ink); box-shadow: 0 0 0 1px var(--color-voice-deep), 0 3px 0 var(--color-voice-deep); transition: transform var(--dur-micro) var(--ease-out); }
+.mic:active { transform: translateY(3px); }
+.mic svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.mic[aria-pressed="true"] { background: var(--color-ink); box-shadow: 0 0 0 1px var(--color-ink), 0 3px 0 var(--color-ink-2); color: var(--color-paper); }
+.helper { min-height: 1lh; font-size: var(--text-sm); color: var(--color-ink-2); }
+.keys { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+/* a label: paper on plastic, a tear-off stub on a dashed rule */
+.label { background: var(--color-surface) var(--grain); border-radius: var(--radius-input); box-shadow: var(--shadow-lift); padding: var(--space-lg); }
+.label dl { display: grid; }
+.label dl > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: baseline; gap: var(--space-md); padding-block: var(--space-sm); border-bottom: 1px solid var(--color-rule); }
+.label dt { font-size: var(--text-sm); color: var(--color-muted); }
+.label dd { font-size: var(--text-xl); font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
+.stub { display: flex; align-items: center; gap: var(--space-md); margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 2px dashed var(--color-rule); font-size: var(--text-sm); color: var(--color-muted); }
+.stamp { flex: none; padding: var(--space-2xs) var(--space-sm); border-radius: 6px; color: var(--color-accent); font-weight: 700; font-size: var(--text-md); box-shadow: 0 0 0 2px var(--color-accent), 0 0 0 4px var(--color-surface), 0 0 0 5px var(--color-accent); transform: rotate(-2deg); }
+.label.is-empty .stamp { color: var(--color-muted); box-shadow: 0 0 0 2px var(--color-muted), 0 0 0 4px var(--color-surface), 0 0 0 5px var(--color-muted); }
+
+/* a day as plastic bands */
+.band { --t: var(--p-thu); display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--space-2xl); align-items: center; padding: var(--space-xl) var(--space-2xl) 0; border-radius: var(--radius-screen); overflow: hidden; background: linear-gradient(color-mix(in oklab, var(--glint) 32%, transparent), transparent 14%), color-mix(in oklab, var(--t) 62%, transparent); box-shadow: inset 0 1.5px 0 var(--glint), inset 0 -40px 60px -48px color-mix(in oklab, var(--t) 70%, var(--color-ink)); }
+.band + .band { margin-top: var(--space-lg); }
+.band-text { display: grid; gap: var(--space-sm); padding-bottom: var(--space-xl); }
+.band .num { font-variant-numeric: tabular-nums; font-family: var(--font-display); font-weight: 700; font-size: var(--text-display); line-height: 1; color: color-mix(in oklab, var(--t) 40%, var(--color-ink)); }
+.band h3 { font-size: var(--text-section); margin-bottom: var(--space-xs); }
+.band p { font-size: var(--text-lead); max-width: 46ch; }
+.band .screen { justify-self: center; width: 300px; height: 440px; border-radius: var(--radius-screen) var(--radius-screen) 0 0; }
+.band--flip .band-text { order: 2; }
+
+/* everything inside: a ruled list, not tiles */
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gap-columns); border-top: 2px solid var(--color-ink); }
+.facts > div { padding-block: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-rule); }
+.facts dt { font-family: var(--font-display); font-weight: 700; font-size: var(--text-title); line-height: 1.35; }
+.facts dd { color: var(--color-ink-2); }
+
+/* the statement on the ink band */
+.ink { background: var(--color-ink); color: var(--color-paper); padding-block: var(--section-gap-s); }
+.ink .container { display: grid; gap: var(--space-lg); }
+.ink h2 { font-size: var(--text-display); max-width: 16ch; }
+.ink .mint { font-size: var(--text-lead); color: var(--color-accent-soft); max-width: 40ch; }
+.ink a { color: var(--color-paper); }
+.ink :focus-visible { outline-color: var(--color-accent-soft); }
+
+/* close: the action again, beside one last screen */
+.close { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-2xl); align-items: center; }
+.close-text { display: grid; gap: var(--space-lg); justify-items: start; }
+.steps { display: grid; width: 100%; border-top: 2px solid var(--color-ink); }
+.steps > div { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-md); padding-block: var(--space-md); border-bottom: 1px solid var(--color-rule); }
+.steps dt { font-weight: 700; }
+.close .screen { justify-self: center; width: 300px; height: 500px; }
+
+/* footer: a mast */
+.foot { margin-top: var(--section-gap); padding-block: var(--space-2xl); border-top: 1px solid var(--color-rule); }
+.foot-in { display: grid; gap: var(--space-md); justify-items: start; }
+.foot nav { display: flex; flex-wrap: wrap; gap: var(--space-lg); }
+.foot nav a { padding-block: var(--space-xs); }
+
+@media (max-width: 60rem) {
+  :root { --gutter: 24px; --section-gap: 96px; --section-gap-s: 80px; }
+  .hero { min-height: 0; }
+  .hero-in, .try-grid, .band, .close { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+  .band { padding: var(--space-xl) var(--space-lg) 0; }
+  .band-text { padding-bottom: 0; }
+  .band--flip .band-text { order: 0; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  h1 { max-width: 16ch; }
+  .window-light i { width: 30%; }
+}
+@media (max-width: 40rem) {
+  :root { --gutter: 16px; --section-gap: 72px; --section-gap-s: 56px; --gap-columns: 16px; }
+  .nav-in { height: 64px; }
+  .wordmark { font-size: var(--text-lg); }
+  .facts { grid-template-columns: minmax(0, 1fr); }
+  .sunk { padding: var(--space-lg); }
+  .steps > div { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xs); }
+  .tray { padding: var(--space-xs); gap: var(--space-2xs); }
+  .tray span { font-size: var(--text-xs); }
+  .stage .screen { width: min(300px, 86%); }
+  .label dl > div { grid-template-columns: 5rem minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+.sunk, .try-grid > * { min-width: 0; }
+.sunk { grid-template-columns: minmax(0, 1fr); }
+.btn:disabled, .key:disabled { opacity: 0.55; cursor: not-allowed; }
+.keys { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; padding-block: var(--space-2xs) var(--space-xs); }
+.screen:focus, .screen:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }

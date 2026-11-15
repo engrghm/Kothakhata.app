@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>গোপনীয়তা নীতি — কথাখাতা</title>
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<main>
+  <p><a href="app.html#/">কথাখাতায় ফিরে যান</a></p>
+  <article class="card">
+    <h1 style="margin-top:0">গোপনীয়তা নীতি</h1>
+    <p class="small muted">সর্বশেষ হালনাগাদ: ১৫ নভেম্বর ২০২৬</p>
+
+    <h2>সংক্ষেপে</h2>
+    <p>কথাখাতার কোনো সার্ভার বা অ্যাকাউন্ট নেই। আপনার হিসাব, কাজ, নোট, অ্যালার্ম — সব কিছু শুধু আপনার নিজের ডিভাইসের ব্রাউজারে (IndexedDB) জমা থাকে। আমরা সেগুলো দেখি না, সংগ্রহ করি না, বিক্রি করি না।</p>
+
+    <h2>যে তথ্য ডিভাইসের বাইরে যেতে পারে</h2>
+    <ul>
+      <li><b>ভয়েস টাইপিং:</b> মাইক চাপলে আপনার কথা লেখায় রূপান্তরের জন্য ব্রাউজার (Chrome/Edge) নিজের স্পিচ সার্ভিসে পাঠায় (যেমন Google বা Microsoft)। এটা ব্রাউজারের সেবা; আপনি মাইক না চাপলে কিছুই যায় না।</li>
+      <li><b>AI দিয়ে গোছানো (ঐচ্ছিক):</b> সেটিংসে নিজের Google Gemini API key দিলে, “গুছিয়ে” মোডে বলা লেখাটুকু সরাসরি Google-এর Gemini API-তে যায়। key শুধু আপনার ডিভাইসে থাকে। key না দিলে কিছুই যায় না।</li>
+      <li><b>ফন্ট:</b> বাংলা ফন্ট (কালপুরুষ) jsDelivr CDN থেকে আর ইংরেজি ফন্ট (Schibsted Grotesk, Instrument Sans) Google Fonts থেকে লোড হয়; এতে তারা আপনার IP ঠিকানা দেখতে পারে।</li>
+      <li><b>হোয়াটসঅ্যাপে পাঠানো:</b> পাবো-দিবোর হিসাব পাঠাতে চাপলে লেখাটা WhatsApp-এ খোলে; পাঠাবেন কি না আপনার সিদ্ধান্ত।</li>
+      <li><b>হোস্টিং:</b> অ্যাপের ফাইলগুলো যে হোস্টিং থেকে আসে, তারা সাধারণ সার্ভার লগ (IP, সময়) রাখতে পারে।</li>
+    </ul>
+
+    <h2>কুকি ও ট্র্যাকিং</h2>
+    <p>কথাখাতা কোনো বিজ্ঞাপন, অ্যানালিটিক্স বা ট্র্যাকিং কুকি ব্যবহার করে না।</p>
+
+    <h2>তথ্য মোছা</h2>
+    <p>সেটিংস → “সব তথ্য মুছে নতুন করে শুরু” চাপলে সব মুছে যায়। ব্রাউজারের সাইট-ডেটা মুছলেও সব মুছে যায় — তাই নিয়মিত ব্যাকআপ ফাইল নামিয়ে রাখুন।</p>
+
+    <h2>যোগাযোগ</h2>
+    <p>প্রশ্ন থাকলে লিখুন: <span class="muted">[আপনার সাপোর্ট ইমেইল এখানে বসান]</span></p>
+  </article>
+  <article class="card" lang="en" id="en">
+    <h1 style="margin-top:0">Privacy policy</h1>
+    <p class="small muted">Last updated: 15 November 2026</p>
+    <h2>In short</h2>
+    <p>KothaKhata has no server and no accounts. Your money records, tasks, notes and alarms are stored only in your own device's browser (IndexedDB). We do not see, collect or sell them.</p>
+    <h2>What can leave your device</h2>
+    <ul>
+      <li><b>Voice typing:</b> when you tap the mic, your browser (Chrome/Edge) sends the audio to its own speech service (for example Google or Microsoft) to turn it into text. Nothing is sent unless you tap the mic.</li>
+      <li><b>AI tidy-up (optional):</b> if you add your own Google Gemini API key in Settings, dictated text in “Tidied” mode goes straight to Google's Gemini API. The key stays on your device. Without a key nothing is sent.</li>
+      <li><b>Fonts:</b> the Bangla font (Kalpurush) loads from the jsDelivr CDN and the English font (Schibsted Grotesk, Instrument Sans) from Google Fonts; they can see your IP address.</li>
+      <li><b>WhatsApp share:</b> sending a lend/borrow statement opens it in WhatsApp; whether to send is your choice.</li>
+      <li><b>Hosting:</b> the host that serves the app files may keep standard server logs (IP, time).</li>
+    </ul>
+    <h2>Cookies and tracking</h2>
+    <p>KothaKhata uses no advertising, analytics or tracking cookies.</p>
+    <h2>Deleting data</h2>
+    <p>Settings → “Delete everything and start over” removes all data. Clearing the browser's site data removes it too — so download backup files regularly.</p>
+    <h2>Contact</h2>
+    <p>Questions: <span class="muted">[put your support email here]</span></p>
+  </article>
+</main>
+</body>
+</html>

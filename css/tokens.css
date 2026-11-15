@@ -1,0 +1,105 @@
+/* Hallmark · tokens for কথাখাতা · theme: Dose (deal: manual, no Node) on the kept brand: teal, saffron, Kalpurush · dose: white, night · modes: light+dark · v2.0.0 */
+/* Bangla: Kalpurush (SIL Open Font License 1.0, github.com/potasiyam/Kalpurush), pinned commit.
+   Latin: Schibsted Grotesk for heads, Instrument Sans for text (both OFL, Google Fonts). */
+@font-face {
+  font-family: "Kalpurush";
+  src: url("https://cdn.jsdelivr.net/gh/potasiyam/Kalpurush@212bef1414db954b9259f099c0fdbad5cd95a80e/release/Kalpurush0.258ship.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0964-0965, U+0980-09FF, U+200C-200D, U+25CC;
+}
+
+:root {
+  /* paper and ink */
+  --color-paper: oklch(97.6% 0.011 88); --color-paper-2: oklch(96% 0.018 172); --color-paper-3: oklch(92.5% 0.03 172);
+  --color-surface: oklch(99.5% 0.005 90);
+  --color-ink: oklch(21% 0.025 180); --color-ink-2: oklch(31% 0.02 180); --color-muted: oklch(46% 0.024 175);
+  --color-rule: oklch(86.5% 0.02 165);
+  /* the one signal: the brand teal */
+  --color-accent: oklch(47% 0.086 176); --color-accent-deep: oklch(39% 0.076 178); --color-accent-soft: oklch(90% 0.055 172); --color-accent-ink: oklch(99% 0.006 170);
+  --color-focus: oklch(42% 0.1 176);
+  /* the brand's second colour, kept for the microphone only */
+  --color-voice: oklch(55% 0.146 50); --color-voice-deep: oklch(46% 0.13 48); --color-voice-soft: oklch(93.5% 0.045 78); --color-voice-ink: oklch(99% 0.01 80);
+  /* money: what came in, what went out */
+  --color-income: oklch(47% 0.12 152); --color-income-soft: oklch(92% 0.05 155);
+  --color-expense: oklch(49% 0.16 27); --color-expense-soft: oklch(92.5% 0.035 22); --color-expense-ink: oklch(99% 0.008 30);
+  --color-info: oklch(42% 0.09 240); --color-info-soft: oklch(92.5% 0.03 222);
+  --color-error: oklch(49% 0.16 27); --color-success: oklch(47% 0.12 152);
+  /* seven days, seven plastic tints: never a state */
+  --p-sat: oklch(85% 0.045 270); --p-sun: oklch(85.5% 0.046 322); --p-mon: oklch(86% 0.05 22); --p-tue: oklch(88% 0.056 64);
+  --p-wed: oklch(91.5% 0.062 98); --p-thu: oklch(87.5% 0.07 165); --p-fri: oklch(87.5% 0.046 212);
+  --plastic-alpha: 62%;
+  --light: oklch(99.4% 0.016 84); --glint: oklch(100% 0 0); --scrim: oklch(18% 0.02 180 / 0.5); --paper-on-print: oklch(99.9% 0.001 90);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .25 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .055 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* faces */
+  --font-display: "Schibsted Grotesk", "Kalpurush", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Instrument Sans", "Kalpurush", ui-sans-serif, system-ui, sans-serif;
+  --display-weight: 700; --tracking-display: -0.02em;
+  /* shape */
+  --radius-card: 14px; --radius-input: 10px; --radius-screen: 28px; --radius-pill: 999px; --rule-hair: 1px;
+  --shadow-card: 0 1px 2px oklch(30% 0.03 170 / 0.08), 0 20px 40px -24px oklch(40% 0.07 170 / 0.3);
+  --shadow-lift: 0 1px 1px oklch(30% 0.03 170 / 0.1), 8px 18px 28px -14px oklch(36% 0.06 170 / 0.3), 18px 40px 60px -30px oklch(40% 0.07 170 / 0.28);
+  --rim: 0 0 0 1px var(--color-rule), 0 3px 0 var(--color-rule);
+  /* shared scale */
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-lock: 700;
+  color-scheme: light;
+
+  /* the names the app's screens already use, pointed at the tokens above */
+  --bg: var(--color-paper); --surface: var(--color-surface); --surface-2: var(--color-paper-2);
+  --border: var(--color-rule); --border-input: var(--color-muted);
+  --text: var(--color-ink); --text-muted: var(--color-muted);
+  --accent: var(--color-accent); --accent-soft: var(--color-accent-soft); --on-accent: var(--color-accent-ink);
+  --saffron: var(--color-voice); --saffron-soft: var(--color-voice-soft);
+  --income: var(--color-income); --income-soft: var(--color-income-soft);
+  --expense: var(--color-expense); --expense-soft: var(--color-expense-soft);
+  --info: var(--color-info); --info-soft: var(--color-info-soft);
+}
+
+/* night: the same system re-derived, hue never moves; elevation is lightness, shadows off */
+:root[data-theme="dark"] {
+  --color-paper: oklch(15% 0.012 175); --color-paper-2: oklch(19% 0.014 175); --color-paper-3: oklch(23.5% 0.018 175);
+  --color-surface: oklch(19.5% 0.014 175);
+  --color-ink: oklch(95% 0.01 165); --color-ink-2: oklch(86% 0.012 168); --color-muted: oklch(71% 0.02 170);
+  --color-rule: oklch(31% 0.018 172);
+  --color-accent: oklch(74% 0.1 174); --color-accent-deep: oklch(63% 0.09 175); --color-accent-soft: oklch(31% 0.05 174); --color-accent-ink: oklch(16% 0.03 176);
+  --color-focus: oklch(78% 0.1 174);
+  --color-voice: oklch(76% 0.13 66); --color-voice-deep: oklch(65% 0.12 62); --color-voice-soft: oklch(29% 0.045 70); --color-voice-ink: oklch(18% 0.03 60);
+  --color-income: oklch(77% 0.13 152); --color-income-soft: oklch(27% 0.045 155);
+  --color-expense: oklch(74% 0.13 27); --color-expense-soft: oklch(27% 0.045 25); --color-expense-ink: oklch(17% 0.03 27);
+  --color-info: oklch(77% 0.08 240); --color-info-soft: oklch(27% 0.035 235);
+  --color-error: oklch(74% 0.13 27); --color-success: oklch(77% 0.13 152);
+  --p-sat: oklch(40% 0.05 270); --p-sun: oklch(40% 0.05 322); --p-mon: oklch(40% 0.055 22); --p-tue: oklch(41% 0.055 64);
+  --p-wed: oklch(42% 0.055 98); --p-thu: oklch(41% 0.06 165); --p-fri: oklch(41% 0.05 212);
+  --plastic-alpha: 70%;
+  --light: oklch(24% 0.02 175); --glint: oklch(70% 0.03 170 / 0.28); --scrim: oklch(8% 0.01 175 / 0.66);
+  --grain: none;
+  --shadow-card: inset 0 0 0 1px var(--color-rule); --shadow-lift: inset 0 0 0 1px var(--color-rule), 0 12px 24px -16px oklch(5% 0.01 175 / 0.8);
+  --rim: 0 0 0 1px var(--color-rule), 0 3px 0 oklch(11% 0.01 175);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) , :root[data-theme="system"] {
+    --color-paper: oklch(15% 0.012 175); --color-paper-2: oklch(19% 0.014 175); --color-paper-3: oklch(23.5% 0.018 175);
+    --color-surface: oklch(19.5% 0.014 175);
+    --color-ink: oklch(95% 0.01 165); --color-ink-2: oklch(86% 0.012 168); --color-muted: oklch(71% 0.02 170);
+    --color-rule: oklch(31% 0.018 172);
+    --color-accent: oklch(74% 0.1 174); --color-accent-deep: oklch(63% 0.09 175); --color-accent-soft: oklch(31% 0.05 174); --color-accent-ink: oklch(16% 0.03 176);
+    --color-focus: oklch(78% 0.1 174);
+    --color-voice: oklch(76% 0.13 66); --color-voice-deep: oklch(65% 0.12 62); --color-voice-soft: oklch(29% 0.045 70); --color-voice-ink: oklch(18% 0.03 60);
+    --color-income: oklch(77% 0.13 152); --color-income-soft: oklch(27% 0.045 155);
+    --color-expense: oklch(74% 0.13 27); --color-expense-soft: oklch(27% 0.045 25); --color-expense-ink: oklch(17% 0.03 27);
+    --color-info: oklch(77% 0.08 240); --color-info-soft: oklch(27% 0.035 235);
+    --color-error: oklch(74% 0.13 27); --color-success: oklch(77% 0.13 152);
+    --p-sat: oklch(40% 0.05 270); --p-sun: oklch(40% 0.05 322); --p-mon: oklch(40% 0.055 22); --p-tue: oklch(41% 0.055 64);
+    --p-wed: oklch(42% 0.055 98); --p-thu: oklch(41% 0.06 165); --p-fri: oklch(41% 0.05 212);
+    --plastic-alpha: 70%;
+    --light: oklch(24% 0.02 175); --glint: oklch(70% 0.03 170 / 0.28); --scrim: oklch(8% 0.01 175 / 0.66);
+    --grain: none;
+    --shadow-card: inset 0 0 0 1px var(--color-rule); --shadow-lift: inset 0 0 0 1px var(--color-rule), 0 12px 24px -16px oklch(5% 0.01 175 / 0.8);
+    --rim: 0 0 0 1px var(--color-rule), 0 3px 0 oklch(11% 0.01 175);
+    color-scheme: dark;
+  }
+}

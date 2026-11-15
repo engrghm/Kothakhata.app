@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>কথাখাতা: হিসাব, কাজ, নোট আর অ্যালার্ম, বাংলায় বলে</title>
+  <meta name="description" content="কথাখাতায় আয়-ব্যয়, বাজেট, পাবো-দিবো, কাজ, নোট আর অ্যালার্ম এক জায়গায়। বাংলায় বা ইংরেজিতে বলুন, অ্যাপ লিখে নেয়।">
+  <meta name="theme-color" content="#0d6b5e">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <script>
+    // someone who already uses the app goes straight to it; index.html?home shows this page again
+    try { if (localStorage.getItem('ds-entered') && !/[?&]home\b/.test(location.search)) location.replace('app.html'); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" crossorigin href="https://cdn.jsdelivr.net/gh/potasiyam/Kalpurush@212bef1414db954b9259f099c0fdbad5cd95a80e/release/Kalpurush0.258ship.ttf">
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700&family=Instrument+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/site.css">
+  <script type="module" src="js/site.js"></script>
+</head>
+<body>
+<a class="visually-hidden skip" href="#main" data-en="Skip to content">মূল অংশে যান</a>
+
+<header class="nav">
+  <div class="container nav-in">
+    <a class="wordmark" href="./?home" aria-label="কথাখাতা"><img src="icons/icon.svg" alt="" width="34" height="34"><span data-en="KothaKhata">কথাখাতা</span></a>
+    <div class="nav-actions">
+      <button type="button" class="key" id="lang" translate="no" aria-label="Switch to English">EN</button>
+      <a class="btn btn--clear" href="app.html" data-en="Open the app">অ্যাপ খুলুন</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="window-light" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="container hero-in">
+      <div class="hero-text">
+        <h1 data-en="Your whole day, written by voice.">সারা দিনের হিসাব, মুখে বললেই।</h1>
+        <p class="lead" data-en="Money, tasks, notes and alarms in one app you can talk to.">আয়-ব্যয়, কাজ, নোট আর অ্যালার্ম এক অ্যাপে, বাংলায় বলে লিখুন।</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="app.html" data-en="Open the app">অ্যাপ খুলুন</a>
+          <a class="btn btn--clear" href="#try" data-en="Try a sentence">একটা বাক্য বলে দেখুন</a>
+        </div>
+        <p class="note" data-en="No account needed.">অ্যাকাউন্ট লাগে না।</p>
+      </div>
+      <figure class="stage">
+        <div class="tray" aria-hidden="true">
+          <span style="--t:var(--p-sat)" data-en="Sat">শনি</span><span style="--t:var(--p-sun)" data-en="Sun">রবি</span><span style="--t:var(--p-mon)" data-en="Mon">সোম</span><span style="--t:var(--p-tue)" data-en="Tue">মঙ্গল</span><span style="--t:var(--p-wed)" data-en="Wed">বুধ</span><span style="--t:var(--p-thu)" data-en="Thu">বৃহঃ</span><span style="--t:var(--p-fri)" data-en="Fri">শুক্র</span>
+        </div>
+        <iframe class="screen" data-route="#/" src="app.html?demo=1#/" title="কথাখাতার হোম স্ক্রিন" width="340" height="600" tabindex="-1"></iframe>
+        <figcaption data-en="The real app on sample data. Scroll it.">নমুনা তথ্যে চলা আসল অ্যাপ। ছুঁয়ে দেখুন।</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="try container" id="try">
+    <div class="head">
+      <h2 data-en="Say it. KothaKhata fills the form.">বলুন, কথাখাতা ফর্ম ভরে দেয়।</h2>
+      <p class="lead" data-en="This is the app's own reader, running on this page.">অ্যাপের নিজের পাঠক এই পাতাতেই চলছে।</p>
+    </div>
+    <div class="try-grid">
+      <form class="sunk" id="say" onsubmit="return false">
+        <label for="said" data-en="What did you spend or receive?">কী খরচ হলো বা কী পেলেন?</label>
+        <div class="say-row">
+          <input id="said" name="said" type="text" autocomplete="off" value="আজ বাজারে আড়াইশো টাকা খরচ">
+          <button type="button" class="mic" id="mic" hidden aria-pressed="false" aria-label="মাইক চেপে বলুন"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        </div>
+        <p class="helper" id="heard" role="status"></p>
+        <div class="keys" id="samples">
+          <button type="button" class="key" data-en="spent 500 on groceries today">আজ বাজারে আড়াইশো টাকা খরচ</button>
+          <button type="button" class="key" data-en="received salary 35 thousand">বেতন পেলাম পঁয়ত্রিশ হাজার</button>
+          <button type="button" class="key" data-en="paid 60 for rickshaw yesterday">গতকাল রিকশা ভাড়া ৬০ টাকা</button>
+        </div>
+      </form>
+      <div class="label" aria-live="polite">
+        <dl>
+          <div><dt data-en="Type">ধরন</dt><dd id="o-kind"></dd></div>
+          <div><dt data-en="Amount">টাকা</dt><dd id="o-amt" class="figure"></dd></div>
+          <div><dt data-en="Category">খাত</dt><dd id="o-cat"></dd></div>
+          <div><dt data-en="Date">তারিখ</dt><dd id="o-date"></dd></div>
+        </dl>
+        <p class="stub"><span class="stamp" data-en="Read">পড়া হয়েছে</span><span data-en="In the app, one tap saves it.">অ্যাপে এক চাপে সেভ হয়।</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="day container">
+    <div class="head">
+      <h2 data-en="One day, three compartments.">একটা দিন, তিন খোপ।</h2>
+    </div>
+    <article class="band" style="--t:var(--p-tue)">
+      <div class="band-text">
+        <span class="num" aria-hidden="true" data-en="1">১</span>
+        <h3 data-en="Spent something? Say it.">খরচ হলেই বলে রাখুন</h3>
+        <p data-en="Tap the mic and speak. The amount and the category fill themselves.">মাইক চেপে বলুন, টাকা আর খাত নিজে বসে যায়।</p>
+        <p data-en="The Budget tab shows how much of the month is left.">বাজেট ট্যাবে দেখুন মাসের কতটা বাকি।</p>
+      </div>
+      <iframe class="screen screen--still" data-route="#/budget" src="app.html?demo=1#/budget" title="বাজেট স্ক্রিন" width="300" height="500" loading="lazy" tabindex="-1"></iframe>
+    </article>
+    <article class="band band--flip" style="--t:var(--p-thu)">
+      <div class="band-text">
+        <span class="num" aria-hidden="true" data-en="2">২</span>
+        <h3 data-en="Tasks and notes together">কাজ আর নোট এক জায়গায়</h3>
+        <p data-en="Give a task a date and a reminder.">কাজে তারিখ আর রিমাইন্ডার দিন।</p>
+        <p data-en="Speak at length. Voice to text keeps it as a note.">লম্বা কথা বলুন, ভয়েস লেখা তা নোট করে রাখে।</p>
+      </div>
+      <iframe class="screen screen--still" data-route="#/tasks" src="app.html?demo=1#/tasks" title="কাজের তালিকা" width="300" height="500" loading="lazy" tabindex="-1"></iframe>
+    </article>
+    <article class="band" style="--t:var(--p-sat)">
+      <div class="band-text">
+        <span class="num" aria-hidden="true" data-en="3">৩</span>
+        <h3 data-en="It calls you on time">সময় হলে ডেকে দেয়</h3>
+        <p data-en="Alarms for every day or for one day.">রোজের বা এক দিনের অ্যালার্ম।</p>
+        <p data-en="It rings while the app is open. A missed one is logged.">অ্যাপ খোলা থাকলে বাজে, মিস হলে লিখে রাখে।</p>
+      </div>
+      <iframe class="screen screen--still" data-route="#/alarms" src="app.html?demo=1#/alarms" title="অ্যালার্ম স্ক্রিন" width="300" height="500" loading="lazy" tabindex="-1"></iframe>
+    </article>
+  </section>
+
+  <section class="inside container">
+    <div class="head">
+      <h2 data-en="Everything inside">ভেতরে যা যা আছে</h2>
+    </div>
+    <dl class="facts">
+      <div><dt data-en="Money">হিসাব</dt><dd data-en="Income, expense, wallets and several books">আয়, খরচ, ওয়ালেট আর একাধিক খাতা</dd></div>
+      <div><dt data-en="Lend and borrow">পাবো-দিবো</dt><dd data-en="Who owes you, and whom you owe">কার কাছে পাওনা, কাকে দিতে হবে</dd></div>
+      <div><dt data-en="Budget">বাজেট</dt><dd data-en="A monthly limit, with warnings">মাসের সীমা আর সতর্কতা</dd></div>
+      <div><dt data-en="Savings">সঞ্চয়</dt><dd data-en="Save toward a target">লক্ষ্য ধরে জমানো</dd></div>
+      <div><dt data-en="Tasks">কাজ</dt><dd data-en="Priority, due date, reminder">অগ্রাধিকার, তারিখ, রিমাইন্ডার</dd></div>
+      <div><dt data-en="Notes">নোট</dt><dd data-en="Pin, colour, reading mode">পিন, রং, পড়ার মোড</dd></div>
+      <div><dt data-en="Alarms">অ্যালার্ম</dt><dd data-en="Daily or one-off">রোজের বা এক দিনের</dd></div>
+      <div><dt data-en="Voice to text">ভয়েস লেখা</dt><dd data-en="Bangla or English speech into text">বাংলা ও ইংরেজি কথা থেকে লেখা</dd></div>
+      <div><dt data-en="Reports">রিপোর্ট</dt><dd data-en="Print to PDF, export CSV">PDF প্রিন্ট আর CSV</dd></div>
+    </dl>
+  </section>
+
+  <section class="ink">
+    <div class="container">
+      <h2 data-en="Your records stay on your phone.">আপনার তথ্য আপনার ফোনেই থাকে।</h2>
+      <p class="mint" data-en="No server, no account. Download a backup file whenever you like.">সার্ভার নেই, অ্যাকাউন্ট নেই। চাইলে ব্যাকআপ ফাইল নামিয়ে রাখুন।</p>
+      <p><a href="privacy.html" data-en="Read the privacy policy">গোপনীয়তা নীতি পড়ুন</a></p>
+    </div>
+  </section>
+
+  <section class="close container">
+    <div class="close-text">
+      <h2 data-en="Put it on your phone.">ফোনে বসিয়ে নিন।</h2>
+      <dl class="steps">
+        <div><dt>Android, Chrome</dt><dd data-en="Menu, then Add to Home screen">মেনু থেকে “হোম স্ক্রিনে যোগ করুন”</dd></div>
+        <div><dt>iPhone, Safari</dt><dd data-en="Share, then Add to Home Screen">শেয়ার থেকে “হোম স্ক্রিনে যোগ করুন”</dd></div>
+        <div><dt data-en="Computer, Chrome or Edge">কম্পিউটার, Chrome বা Edge</dt><dd data-en="The install mark in the address bar">ঠিকানার ঘরের ইনস্টল চিহ্ন</dd></div>
+      </dl>
+      <p class="note" data-en="Once installed it opens without internet.">বসানোর পর ইন্টারনেট ছাড়াও খোলে।</p>
+      <a class="btn btn--primary" href="app.html" data-en="Open the app">অ্যাপ খুলুন</a>
+    </div>
+    <iframe class="screen screen--still" data-route="#/voice" src="app.html?demo=1#/voice" title="ভয়েস থেকে লেখা স্ক্রিন" width="300" height="500" loading="lazy" tabindex="-1"></iframe>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container foot-in">
+    <a class="wordmark" href="./?home" aria-label="কথাখাতা"><img src="icons/icon.svg" alt="" width="34" height="34"><span data-en="KothaKhata">কথাখাতা</span></a>
+    <nav aria-label="নিচের লিংক">
+      <a href="app.html" data-en="Open the app">অ্যাপ খুলুন</a>
+      <a href="privacy.html" data-en="Privacy policy">গোপনীয়তা নীতি</a>
+    </nav>
+    <p class="note" data-en="Bangla set in Kalpurush, under the SIL Open Font License.">বাংলা হরফ Kalpurush, SIL Open Font License-এ।</p>
+  </div>
+</footer>
+</body>
+</html>

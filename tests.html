@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="bn">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>কথাখাতা টেস্ট</title>
+<style>body{font-family:system-ui,sans-serif;max-width:760px;margin:24px auto;padding:0 16px;background:#fff;color:#111}li{margin:4px 0}.ok{color:#13803d}.bad{color:#c2352b;font-weight:700}</style></head>
+<body>
+<h1>ভয়েস পার্সার টেস্ট</h1>
+<p id="sum">চলছে…</p>
+<ol id="out"></ol>
+<script type="module">
+import { parseEntry } from './js/voice.js';
+import { money } from './js/util.js';
+const cats = [
+  { id: 'bazar', name: 'বাজার', kind: 'expense', keywords: 'বাজার সবজি মাছ মাংস চাল ডাল তেল মুদি ডিম দুধ' },
+  { id: 'food', name: 'খাবার', kind: 'expense', keywords: 'খাবার নাস্তা নাশতা লাঞ্চ ডিনার রেস্টুরেন্ট চা কফি হোটেল বিরিয়ানি' },
+  { id: 'transport', name: 'যাতায়াত', kind: 'expense', keywords: 'রিকশা রিক্সা বাস সিএনজি ভাড়া উবার পাঠাও ট্রেন লঞ্চ যাতায়াত গাড়ি তেল পেট্রোল অকটেন' },
+  { id: 'rent', name: 'বাসা ভাড়া', kind: 'expense', keywords: 'বাসা ভাড়া বাড়ি ভাড়া রেন্ট' },
+  { id: 'bill', name: 'বিল', kind: 'expense', keywords: 'বিদ্যুৎ কারেন্ট গ্যাস পানি বিল ইন্টারনেট ওয়াইফাই ডিশ' },
+  { id: 'mobile', name: 'মোবাইল রিচার্জ', kind: 'expense', keywords: 'মোবাইল রিচার্জ ফ্লেক্সি এমবি' },
+  { id: 'med', name: 'চিকিৎসা', kind: 'expense', keywords: 'ওষুধ ঔষধ ডাক্তার হাসপাতাল চিকিৎসা টেস্ট' },
+  { id: 'edu', name: 'শিক্ষা', kind: 'expense', keywords: 'বই খাতা স্কুল কলেজ টিউশন বেতন ফি কোর্স শিক্ষা' },
+  { id: 'shop', name: 'কেনাকাটা', kind: 'expense', keywords: 'জামা কাপড় জুতা শপিং কেনাকাটা শাড়ি পাঞ্জাবি' },
+  { id: 'salary', name: 'বেতন', kind: 'income', keywords: 'বেতন স্যালারি মাইনে salary' },
+  { id: 'biz', name: 'ব্যবসা', kind: 'income', keywords: 'ব্যবসা বিক্রি লাভ দোকান' },
+];
+const cases = [
+  ['আজ বাজারে ৫০০ টাকা খরচ করলাম', 'expense', 500, 'bazar'],
+  ['গতকাল রিকশা ভাড়া ৮০ টাকা', 'expense', 80, 'transport'],
+  ['বেতন পেলাম ২৫ হাজার', 'income', 25000, 'salary'],
+  ['আড়াই হাজার টাকা দিয়ে জুতা কিনলাম', 'expense', 2500, 'shop'],
+  ['দেড়শো টাকার চা নাস্তা', 'expense', 150, 'food'],
+  ['সাড়ে তিন হাজার বিদ্যুৎ বিল', 'expense', 3500, 'bill'],
+  ['পাঁচশো টাকা মোবাইল রিচার্জ', 'expense', 500, 'mobile'],
+  ['বারোশো টাকা ওষুধ', 'expense', 1200, 'med'],
+  ['১,২৫০ টাকা বাসা ভাড়া', 'expense', 1250, 'rent'],
+  ['দুই লাখ পঞ্চাশ হাজার ব্যবসা থেকে আয়', 'income', 250000, 'biz'],
+  ['পৌনে দুই হাজার টাকার বাজার', 'expense', 1750, 'bazar'],
+  ['বিশ টাকা বাস ভাড়া', 'expense', 20, 'transport'],
+  ['ছয়শো টাকা বই কিনলাম', 'expense', 600, 'edu'],
+  ['20k salary received', 'income', 20000, 'salary'],
+];
+let pass = 0;
+const out = document.getElementById('out');
+for (const [text, kind, amount, cat] of cases) {
+  const p = parseEntry(text, cats);
+  const ok = p.kind === kind && p.amount === amount * 100 && p.categoryId === cat;
+  if (ok) pass++;
+  const li = document.createElement('li');
+  li.className = ok ? 'ok' : 'bad';
+  li.textContent = `${ok ? '✓' : '✗'} “${text}” → ${p.kind}, ${money(p.amount)}, ${p.categoryId || '-'}${ok ? '' : `  (চাই: ${kind}, ${amount}, ${cat})`}`;
+  out.append(li);
+}
+document.getElementById('sum').textContent = `${pass}/${cases.length} পাস`;
+document.title = `${pass}/${cases.length} পাস`;
+</script>
+</body>
+</html>
