@@ -1,0 +1,77 @@
+# Builds the Android app (a Trusted Web Activity for the live site) and publishes the APK as a release.
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['android/**', '.github/workflows/android.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION_CODE: ${{ github.run_number }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Signing key
+        run: |
+          KS="$RUNNER_TEMP/kothakhata.keystore"
+          if [ -n "$KEYSTORE_BASE64" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$KS"
+            echo "KS_PASS=$KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
+            echo "KS_KIND=your own key (from repository secrets)" >> "$GITHUB_ENV"
+          else
+            keytool -genkeypair -keystore "$KS" -storepass temporary -keypass temporary -alias kothakhata -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=KothaKhata"
+            echo "KS_PASS=temporary" >> "$GITHUB_ENV"
+            echo "KS_KIND=a temporary key made for this build only" >> "$GITHUB_ENV"
+          fi
+          echo "KS_FILE=$KS" >> "$GITHUB_ENV"
+          echo "KS_ALIAS=kothakhata" >> "$GITHUB_ENV"
+
+      - name: Build APK
+        run: gradle -p android assembleRelease --no-daemon --stacktrace
+
+      - name: Collect files
+        run: |
+          mkdir out
+          cp android/app/build/outputs/apk/release/app-release.apk out/KothaKhata.apk
+          SHA=$(keytool -list -v -keystore "$KS_FILE" -storepass "$KS_PASS" -alias "$KS_ALIAS" | grep 'SHA256:' | sed 's/.*SHA256: //')
+          printf '[{\n  "relation": ["delegate_permission/common.handle_all_urls"],\n  "target": { "namespace": "android_app", "package_name": "app.kothakhata.twa", "sha256_cert_fingerprints": ["%s"] }\n}]\n' "$SHA" > out/assetlinks.json
+          echo "### KothaKhata.apk is ready" >> "$GITHUB_STEP_SUMMARY"
+          echo "Signed with: $KS_KIND" >> "$GITHUB_STEP_SUMMARY"
+          echo "SHA-256 fingerprint: $SHA" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KothaKhata-android
+          path: out/
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-latest
+          name: KothaKhata for Android (latest build)
+          body: |
+            Install KothaKhata.apk on an Android phone (allow "install unknown apps" for your browser when asked).
+            The app opens https://engrghm.github.io/Kothakhata.app/ in the phone's Chrome.
+            Signed with: ${{ env.KS_KIND }}.
+          files: |
+            out/KothaKhata.apk
+            out/assetlinks.json
+          make_latest: true

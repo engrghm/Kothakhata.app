@@ -1,0 +1,43 @@
+// KothaKhata for Android: a Trusted Web Activity. It opens the live site in the phone's Chrome,
+// full screen, so the microphone, voice typing, downloads and printing work as they do on the web.
+plugins {
+    id 'com.android.application'
+}
+
+def siteHost = 'engrghm.github.io'
+def sitePath = '/Kothakhata.app'
+def buildNumber = (System.getenv('VERSION_CODE') ?: '1') as int
+
+android {
+    namespace 'app.kothakhata.twa'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'app.kothakhata.twa'
+        minSdk 21
+        targetSdk 34
+        versionCode buildNumber
+        versionName "1.0.${buildNumber}"
+        manifestPlaceholders = [hostName: siteHost, pathPrefix: sitePath, defaultUrl: "https://${siteHost}${sitePath}/"]
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(System.getenv('KS_FILE') ?: 'missing.keystore')
+            storePassword System.getenv('KS_PASS')
+            keyAlias System.getenv('KS_ALIAS')
+            keyPassword System.getenv('KS_PASS')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+}
