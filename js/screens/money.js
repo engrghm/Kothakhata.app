@@ -40,6 +40,7 @@ export function home(el) {
 
   el.innerHTML = `
   ${prevMonth.income + prevMonth.expense === 0 && state.period === 'month' && M.txns().length === 0 ? `<div class="card flat small muted">প্রথম এন্ট্রি দিন — নিচের <b>+</b> বাটন চাপুন, অথবা <b>মাইক</b> চেপে বলুন “আজ বাজারে ৫০০ টাকা খরচ”।</div>` : ''}
+  <div class="home"><div class="home-side">
   <div class="week-h"><h2>এই সপ্তাহের খরচ</h2><span class="small muted money">${money(week.reduce((a, x) => a + x.exp, 0))}</span></div>
   <div class="week" role="list">${week.map((x, i) => `<div class="well ${x.k === today ? 'today' : x.k > today ? 'ahead' : ''}" role="listitem" style="--t:var(--p-${TINTS[i]})"><small>${DAYS[x.d.getDay()]}</small><i>${bn(x.d.getDate())}</i><b class="money">${money(x.exp, { symbol: false })}</b></div>`).join('')}</div>
   <section class="card" aria-label="সারাংশ">
@@ -51,14 +52,15 @@ export function home(el) {
       </div>
       ${state.period === 'month' ? `<div class="row" style="gap:4px"><button class="icon-btn" data-m="-1" aria-label="আগের মাস">${icon('left')}</button><b>${monthLabel(state.month)}</b><button class="icon-btn" data-m="1" aria-label="পরের মাস">${icon('right')}</button></div>` : ''}
     </div>
-    <div class="stats">
+    <div class="balance"><small>বাকি</small><b class="money">${money(sum.balance)}</b></div>
+    <div class="stats two">
       <div class="stat income"><small>আয়</small><b>${money(sum.income)}</b></div>
       <div class="stat expense"><small>খরচ</small><b>${money(sum.expense)}</b></div>
-      <div class="stat info"><small>বাকি</small><b>${money(sum.balance)}</b></div>
     </div>
     ${state.period === 'month' && sum.income ? `<div style="margin-top:12px"><div class="row xs muted"><span class="grow">আয়ের ${bn(pct)}% খরচ হয়েছে</span></div><div class="bar ${pct >= 100 ? 'over' : ''}" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div></div>` : ''}
   </section>
   ${quick.length ? `<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:12px"><span class="xs muted">${icon('bolt')}</span>${quick.map((q) => `<button class="chip" data-quick="${q.id}">${esc(q.label)} · ${money(q.amount)}</button>`).join('')}</div>` : ''}
+  </div><div class="home-main">
   <div class="row" style="margin-bottom:12px">
     <label class="grow" style="position:relative"><span class="sr">খুঁজুন</span><input class="input" id="q" type="search" placeholder="খুঁজুন: নোট, ক্যাটাগরি বা টাকা" value="${esc(state.q)}"></label>
     <a class="icon-btn" href="#/stats" aria-label="গ্রাফ ও বিশ্লেষণ" title="গ্রাফ">${icon('chart')}</a>
@@ -68,7 +70,7 @@ export function home(el) {
   <div id="txlist">
   ${Object.keys(byDay).length ? Object.entries(byDay).map(([d, ts]) => { const s = M.totals(ts); return `<div class="day-h"><span>${dateLabel(d + 'T00:00')}</span><span class="money">${s.income ? `<span class="c-income">+${money(s.income)}</span> ` : ''}${s.expense ? `<span class="c-expense">-${money(s.expense)}</span>` : ''}</span></div><div class="list">${ts.map(txnRow).join('')}</div>`; }).join('')
     : empty('file', state.q || state.cat ? 'কিছু পাওয়া যায়নি' : 'এই সময়ে কোনো লেনদেন নেই', state.q ? '' : '+ চেপে প্রথম হিসাবটা লিখুন')}
-  </div>`;
+  </div></div></div>`;
 
   el.querySelectorAll('.seg button').forEach((b) => b.onclick = () => { state.period = b.dataset.v; home(el); });
   el.querySelectorAll('[data-m]').forEach((b) => b.onclick = () => { state.month = addMonths(state.month, +b.dataset.m); home(el); });

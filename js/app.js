@@ -137,11 +137,11 @@ async function boot() {
   await db.init();
   await M.ensureSeed();
   if (db.DEMO) {
-    // the landing page frames the real app: sample data, light paper, no alarms, nothing saved
+    // preview mode (?demo=1): sample data, light paper, no alarms, nothing saved
     await db.saveSettings({ lang: new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'bn', theme: 'light' });
     await M.seedDemo(db.settings().lang);
     document.documentElement.classList.add('demo');
-  } else { try { localStorage.setItem('ds-entered', '1'); } catch {} }
+  }
   set.applyTheme();
   setLang(db.settings().lang || 'bn');
   shell();

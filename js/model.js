@@ -139,7 +139,7 @@ export async function notify(title, body, type = 'reminder') {
 }
 export const thisMonth = () => ym();
 
-// Sample data for the landing page's live screens (?demo=1). Memory only: db.init() opens no database in demo mode.
+// Sample data for preview mode (?demo=1). Memory only: db.init() opens no database in demo mode.
 export async function seedDemo(lang) {
   const en = lang === 'en';
   const book = bookId();
@@ -161,6 +161,3 @@ export async function seedDemo(lang) {
   await db.put('alarms', { label: en ? 'Morning walk' : 'সকালে হাঁটা', time: '06:00', days: [0, 1, 2, 3, 4, 6], date: null, enabled: true, snoozeAt: null, lastFired: ymd() });
   await db.put('alarms', { label: en ? 'Medicine' : 'ওষুধ খাওয়া', time: '21:30', days: [0, 1, 2, 3, 4, 5, 6], date: null, enabled: true, snoozeAt: null, lastFired: ymd() });
 }
-
-// The default categories as plain rows, for the landing page's live sentence reader (no database needed).
-export const demoCats = () => DEFAULT_CATS.map(([name, kind, keywords]) => ({ id: name, name, kind, keywords: `${keywords} ${EN_KW[name] || ''}`.trim() }));

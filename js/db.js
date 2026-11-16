@@ -2,7 +2,7 @@
 import { uid } from './util.js';
 
 const DB_NAME = 'dinsathi';
-// ?demo=1: the landing page shows the real app on sample data, kept in memory only
+// ?demo=1: preview mode, the real app on sample data, kept in memory only
 export const DEMO = new URLSearchParams(location.search).has('demo');
 const VERSION = 1;
 export const STORES = ['books', 'categories', 'wallets', 'txns', 'recurring', 'quick', 'budgets', 'savings', 'deposits', 'people', 'lenden', 'tasks', 'notes', 'alarms', 'notifications', 'settings'];

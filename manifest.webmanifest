@@ -3,7 +3,7 @@
   "short_name": "কথাখাতা",
   "description": "আয়-ব্যয়, বাজেট, সঞ্চয়, পাবো-দিবো, কাজ, নোট আর অ্যালার্ম — বাংলায় বলে এন্ট্রি দিন।",
   "lang": "bn",
-  "start_url": "./app.html#/",
+  "start_url": "./#/",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f6f5",
@@ -15,9 +15,9 @@
     { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ],
   "shortcuts": [
-    { "name": "বলে এন্ট্রি দিন", "url": "./app.html#/add?voice=1" },
-    { "name": "ভয়েস থেকে লেখা", "url": "./app.html#/voice?start=1" },
-    { "name": "নতুন কাজ", "url": "./app.html#/tasks" },
-    { "name": "নতুন নোট", "url": "./app.html#/note/new" }
+    { "name": "বলে এন্ট্রি দিন", "url": "./#/add?voice=1" },
+    { "name": "ভয়েস থেকে লেখা", "url": "./#/voice?start=1" },
+    { "name": "নতুন কাজ", "url": "./#/tasks" },
+    { "name": "নতুন নোট", "url": "./#/note/new" }
   ]
 }

@@ -1,6 +1,6 @@
 // কথাখাতা service worker: offline cache + notification clicks.
-const CACHE = 'kothakhata-v1';
-const FILES = ['./', 'index.html', 'app.html', 'css/tokens.css', 'css/site.css', 'js/site.js', 'privacy.html', 'manifest.webmanifest', 'css/app.css', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
+const CACHE = 'kothakhata-v2';
+const FILES = ['./', 'index.html', 'css/tokens.css', 'privacy.html', 'manifest.webmanifest', 'css/app.css', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
   'js/app.js', 'js/i18n.js', 'js/db.js', 'js/model.js', 'js/util.js', 'js/ui.js', 'js/voice.js', 'js/reminders.js', 'js/router.js',
   'js/screens/money.js', 'js/screens/plans.js', 'js/screens/life.js', 'js/screens/settings.js', 'js/screens/voicepad.js'];
 
@@ -20,5 +20,5 @@ self.addEventListener('fetch', (e) => {
 
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
-  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((cs) => { for (const c of cs) if ('focus' in c) return c.focus(); return self.clients.openWindow('./app.html#/alarms'); }));
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((cs) => { for (const c of cs) if ('focus' in c) return c.focus(); return self.clients.openWindow('./#/alarms'); }));
 });
