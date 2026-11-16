@@ -9,14 +9,14 @@ import { t as tr, lang } from '../i18n.js';
 
 const state = { period: 'month', month: ym(), q: '', cat: null };
 
-const catDot = (c) => `<span class="dot" style="background:${c?.color || '#4d5b57'}">${esc(initial(tr(c?.name || '?')))}</span>`;
+const catDot = (c) => `<span class="dot" style="--c:${c?.color || 'var(--color-muted)'}">${esc(initial(tr(c?.name || '?')))}</span>`;
 
 function txnRow(t) {
   const c = M.catById(t.categoryId);
   const w = db.get('wallets', t.walletId);
   const title = t.kind === 'transfer' ? `ট্রান্সফার: ${esc(w?.name || '')} → ${esc(db.get('wallets', t.toWalletId)?.name || '')}` : esc(c?.name || (t.kind === 'income' ? 'আয়' : 'খরচ'));
   const cls = t.kind === 'income' ? 'c-income' : t.kind === 'expense' ? 'c-expense' : 'c-info';
-  return `<a class="item" href="#/txn/${t.id}">${t.kind === 'transfer' ? `<span class="dot" style="background:var(--info)">${icon('swap')}</span>` : catDot(c)}
+  return `<a class="item" href="#/txn/${t.id}">${t.kind === 'transfer' ? `<span class="dot" style="--c:var(--info)">${icon('swap')}</span>` : catDot(c)}
     <div class="grow"><div class="row" style="gap:6px">${title}${t.source === 'voice' ? `<span class="tag" title="বলে লেখা">${icon('mic')}</span>` : t.source === 'recurring' ? `<span class="tag" title="নিয়মিত">${icon('repeat')}</span>` : ''}</div><div class="xs muted">${timeLabel(t.at)}${t.note && t.note !== c?.name ? ' · ' + esc(t.note) : ''}${w && t.kind !== 'transfer' && !db.settings().walletsOff ? ' · ' + esc(w.name) : ''}</div></div>
     <span class="amt ${cls}">${t.kind === 'expense' ? '-' : t.kind === 'income' ? '+' : ''}${money(t.amount)}</span></a>`;
 }
@@ -36,14 +36,21 @@ export function home(el) {
   // the week tray: Saturday to Friday, one compartment a day
   const wkStart = new Date(); wkStart.setDate(wkStart.getDate() - ((wkStart.getDay() + 1) % 7));
   const week = Array.from({ length: 7 }, (_, i) => { const d = new Date(wkStart); d.setDate(wkStart.getDate() + i); const k = ymd(d); return { k, d, exp: M.totals(M.dayTxns(k)).expense }; });
-  const TINTS = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'];
+  const wkTop = Math.max(1, ...week.map((x) => x.exp));
+  // the month's spending, day by day, as one line on the balance card
+  let spark = '';
+  if (state.period === 'month') {
+    const [sy, sm] = state.month.split('-').map(Number);
+    const last = state.month === ym() ? new Date().getDate() : new Date(sy, sm, 0).getDate();
+    const per = Array(last).fill(0);
+    for (const t of M.monthTxns(state.month)) if (t.kind === 'expense') { const d = +t.at.slice(8, 10); if (d <= last) per[d - 1] += t.amount; }
+    const top = Math.max(...per);
+    if (last > 2 && top > 0) spark = `<svg class="spark" viewBox="0 0 120 44" preserveAspectRatio="none" role="img" aria-label="এই মাসের দৈনিক খরচ"><polyline points="${per.map((v, i) => `${((i / (last - 1)) * 120).toFixed(1)},${(40 - (v / top) * 36).toFixed(1)}`).join(' ')}"/></svg>`;
+  }
 
   el.innerHTML = `
   ${prevMonth.income + prevMonth.expense === 0 && state.period === 'month' && M.txns().length === 0 ? `<div class="card flat small muted">প্রথম এন্ট্রি দিন — নিচের <b>+</b> বাটন চাপুন, অথবা <b>মাইক</b> চেপে বলুন “আজ বাজারে ৫০০ টাকা খরচ”।</div>` : ''}
   <div class="home"><div class="home-side">
-  <div class="week-h"><h2>এই সপ্তাহের খরচ</h2><span class="small muted money">${money(week.reduce((a, x) => a + x.exp, 0))}</span></div>
-  <div class="week" role="list">${week.map((x, i) => `<div class="well ${x.k === today ? 'today' : x.k > today ? 'ahead' : ''}" role="listitem" style="--t:var(--p-${TINTS[i]})"><small>${DAYS[x.d.getDay()]}</small><i>${bn(x.d.getDate())}</i><b class="money">${money(x.exp, { symbol: false })}</b></div>`).join('')}</div>
-  <section class="card" aria-label="সারাংশ">
     <div class="month-nav">
       <div class="seg" role="group" aria-label="সময়">
         <button data-v="today" class="${state.period === 'today' ? 'on' : ''}" aria-pressed="${state.period === 'today'}">আজ</button>
@@ -52,21 +59,24 @@ export function home(el) {
       </div>
       ${state.period === 'month' ? `<div class="row" style="gap:4px"><button class="icon-btn" data-m="-1" aria-label="আগের মাস">${icon('left')}</button><b>${monthLabel(state.month)}</b><button class="icon-btn" data-m="1" aria-label="পরের মাস">${icon('right')}</button></div>` : ''}
     </div>
-    <div class="balance"><small>বাকি</small><b class="money">${money(sum.balance)}</b></div>
-    <div class="stats two">
-      <div class="stat income"><small>আয়</small><b>${money(sum.income)}</b></div>
-      <div class="stat expense"><small>খরচ</small><b>${money(sum.expense)}</b></div>
+  <section class="hero" aria-label="সারাংশ">
+    <div class="hero-top"><div class="balance"><small>বাকি</small><b class="money">${money(sum.balance)}</b></div>${spark}</div>
+    <div class="hero-io">
+      <div class="io">${icon('in')}<div><small>আয়</small><b class="money">${money(sum.income)}</b></div></div>
+      <div class="io">${icon('out')}<div><small>খরচ</small><b class="money">${money(sum.expense)}</b></div></div>
     </div>
-    ${state.period === 'month' && sum.income ? `<div style="margin-top:12px"><div class="row xs muted"><span class="grow">আয়ের ${bn(pct)}% খরচ হয়েছে</span></div><div class="bar ${pct >= 100 ? 'over' : ''}" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div></div>` : ''}
+    ${state.period === 'month' && sum.income ? `<div class="hero-bar"><div class="xs">আয়ের ${bn(pct)}% খরচ হয়েছে</div><div class="bar ${pct >= 100 ? 'over' : ''}" role="progressbar" aria-label="আয়ের কত অংশ খরচ হয়েছে" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div></div>` : ''}
   </section>
-  ${quick.length ? `<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:12px"><span class="xs muted">${icon('bolt')}</span>${quick.map((q) => `<button class="chip" data-quick="${q.id}">${esc(q.label)} · ${money(q.amount)}</button>`).join('')}</div>` : ''}
+  <div class="week-h"><h2>এই সপ্তাহের খরচ</h2><span class="small muted money">${money(week.reduce((a, x) => a + x.exp, 0))}</span></div>
+  <div class="week" role="list">${week.map((x, i) => `<div class="well ${x.k === today ? 'today' : x.k > today ? 'ahead' : ''}" role="listitem"><b class="money">${x.exp ? money(x.exp, { symbol: false }) : '\u00a0'}</b><span class="wbar"><span style="--h:${Math.round((x.exp / wkTop) * 100)}%"></span></span><small>${DAYS[x.d.getDay()]}</small><i>${bn(x.d.getDate())}</i></div>`).join('')}</div>
+  ${quick.length ? `<div class="chips">${quick.map((q) => `<button class="chip" data-quick="${q.id}">${icon('bolt')}${esc(q.label)} · ${money(q.amount)}</button>`).join('')}</div>` : ''}
   </div><div class="home-main">
   <div class="row" style="margin-bottom:12px">
     <label class="grow" style="position:relative"><span class="sr">খুঁজুন</span><input class="input" id="q" type="search" placeholder="খুঁজুন: নোট, ক্যাটাগরি বা টাকা" value="${esc(state.q)}"></label>
     <a class="icon-btn" href="#/stats" aria-label="গ্রাফ ও বিশ্লেষণ" title="গ্রাফ">${icon('chart')}</a>
     <a class="icon-btn" href="#/categories" aria-label="ক্যাটাগরি" title="ক্যাটাগরি">${icon('tag')}</a>
   </div>
-  ${usedCats.length ? `<div class="row" style="flex-wrap:wrap;gap:6px;margin-bottom:8px"><button class="chip ${!state.cat ? 'on' : ''}" data-cat="">সব</button>${usedCats.map((c) => `<button class="chip ${state.cat === c.id ? 'on' : ''}" data-cat="${c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
+  ${usedCats.length ? `<div class="chips"><button class="chip ${!state.cat ? 'on' : ''}" data-cat="">সব</button>${usedCats.map((c) => `<button class="chip ${state.cat === c.id ? 'on' : ''}" data-cat="${c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
   <div id="txlist">
   ${Object.keys(byDay).length ? Object.entries(byDay).map(([d, ts]) => { const s = M.totals(ts); return `<div class="day-h"><span>${dateLabel(d + 'T00:00')}</span><span class="money">${s.income ? `<span class="c-income">+${money(s.income)}</span> ` : ''}${s.expense ? `<span class="c-expense">-${money(s.expense)}</span>` : ''}</span></div><div class="list">${ts.map(txnRow).join('')}</div>`; }).join('')
     : empty('file', state.q || state.cat ? 'কিছু পাওয়া যায়নি' : 'এই সময়ে কোনো লেনদেন নেই', state.q ? '' : '+ চেপে প্রথম হিসাবটা লিখুন')}
@@ -249,7 +259,7 @@ export function wallets(el) {
     el.innerHTML = `<div class="pagehead"><a class="icon-btn" href="#/more" aria-label="ফিরে যান">${icon('back')}</a><h1>ওয়ালেট</h1></div>
     <section class="card" style="background:var(--accent-soft)"><div class="small muted">মোট ব্যালেন্স</div><div style="font-size:28px;font-weight:700" class="money">${money(total)}</div>
     <a class="btn sm" href="#/add?kind=transfer" style="margin-top:8px">${icon('swap')} ট্রান্সফার</a></section>
-    <div class="list">${ws.length ? ws.map((w) => `<button class="item" data-id="${w.id}"><span class="dot" style="background:${w.color}">${icon('wallet')}</span><div class="grow">${esc(w.name)}<div class="xs muted">শুরুর ব্যালেন্স ${money(w.opening || 0)}</div></div><span class="amt money">${money(M.walletBalance(w))}</span></button>`).join('') : empty('wallet', 'কোনো ওয়ালেট নেই', '+ চেপে নগদ, ব্যাংক বা মোবাইল ব্যাংকিং যোগ করুন')}</div>
+    <div class="list">${ws.length ? ws.map((w) => `<button class="item" data-id="${w.id}"><span class="dot" style="--c:${w.color}">${icon('wallet')}</span><div class="grow">${esc(w.name)}<div class="xs muted">শুরুর ব্যালেন্স ${money(w.opening || 0)}</div></div><span class="amt money">${money(M.walletBalance(w))}</span></button>`).join('') : empty('wallet', 'কোনো ওয়ালেট নেই', '+ চেপে নগদ, ব্যাংক বা মোবাইল ব্যাংকিং যোগ করুন')}</div>
     ${transfers.length ? `<h2 class="small muted">ট্রান্সফারের ইতিহাস</h2><div class="list">${transfers.map(txnRow).join('')}</div>` : ''}`;
     el.querySelectorAll('[data-id]').forEach((b) => b.onclick = () => walletForm(db.get('wallets', b.dataset.id), draw));
   };

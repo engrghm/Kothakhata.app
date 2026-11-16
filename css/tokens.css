@@ -1,4 +1,4 @@
-/* Hallmark · tokens for কথাখাতা · theme: Dose (deal: manual, no Node) on the kept brand: teal, saffron, Kalpurush · dose: white, night · modes: light+dark · v2.0.0 */
+/* Hallmark · tokens for কথাখাতা · theme: Dose (deal: manual, no Node) on the kept brand: teal, saffron, Kalpurush · dose: white, night · modes: light+dark · v4.0.0 */
 /* Bangla: Kalpurush (SIL Open Font License 1.0, github.com/potasiyam/Kalpurush), pinned commit.
    Latin: Schibsted Grotesk for heads, Instrument Sans for text (both OFL, Google Fonts). */
 @font-face {
@@ -25,6 +25,8 @@
   --color-expense: oklch(49% 0.16 27); --color-expense-soft: oklch(92.5% 0.035 22); --color-expense-ink: oklch(99% 0.008 30);
   --color-info: oklch(42% 0.09 240); --color-info-soft: oklch(92.5% 0.03 222);
   --color-error: oklch(49% 0.16 27); --color-success: oklch(47% 0.12 152);
+  /* the balance card: the brand teal at its deepest, the one dark object on the paper */
+  --color-hero: oklch(31% 0.06 178); --color-hero-2: oklch(38% 0.066 178); --color-hero-ink: oklch(98% 0.01 170); --color-hero-muted: oklch(86% 0.035 172); --color-hero-warn: oklch(80% 0.12 45);
   /* seven days, seven plastic tints: never a state */
   --p-sat: oklch(85% 0.045 270); --p-sun: oklch(85.5% 0.046 322); --p-mon: oklch(86% 0.05 22); --p-tue: oklch(88% 0.056 64);
   --p-wed: oklch(91.5% 0.062 98); --p-thu: oklch(87.5% 0.07 165); --p-fri: oklch(87.5% 0.046 212);
@@ -36,10 +38,10 @@
   --font-body: "Instrument Sans", "Kalpurush", ui-sans-serif, system-ui, sans-serif;
   --display-weight: 700; --tracking-display: -0.02em;
   /* shape */
-  --radius-card: 14px; --radius-input: 10px; --radius-screen: 28px; --radius-pill: 999px; --rule-hair: 1px;
-  --shadow-card: 0 1px 2px oklch(30% 0.03 170 / 0.08), 0 20px 40px -24px oklch(40% 0.07 170 / 0.3);
+  --radius-card: 24px; --radius-input: 14px; --radius-dock: 26px; --radius-screen: 28px; --radius-pill: 999px; --rule-hair: 1px;
+  --shadow-card: 0 1px 2px oklch(30% 0.03 170 / 0.05), 0 14px 32px -20px oklch(40% 0.07 170 / 0.26);
   --shadow-lift: 0 1px 1px oklch(30% 0.03 170 / 0.1), 8px 18px 28px -14px oklch(36% 0.06 170 / 0.3), 18px 40px 60px -30px oklch(40% 0.07 170 / 0.28);
-  --rim: 0 0 0 1px var(--color-rule), 0 3px 0 var(--color-rule);
+  --rim: 0 0 0 1px var(--color-rule);
   /* shared scale */
   --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -74,10 +76,11 @@
   --p-sat: oklch(40% 0.05 270); --p-sun: oklch(40% 0.05 322); --p-mon: oklch(40% 0.055 22); --p-tue: oklch(41% 0.055 64);
   --p-wed: oklch(42% 0.055 98); --p-thu: oklch(41% 0.06 165); --p-fri: oklch(41% 0.05 212);
   --plastic-alpha: 70%;
+  --color-hero: oklch(26% 0.045 176); --color-hero-2: oklch(32% 0.052 176); --color-hero-ink: oklch(95% 0.012 168); --color-hero-muted: oklch(80% 0.03 172);
   --light: oklch(24% 0.02 175); --glint: oklch(70% 0.03 170 / 0.28); --scrim: oklch(8% 0.01 175 / 0.66);
   --grain: none;
   --shadow-card: inset 0 0 0 1px var(--color-rule); --shadow-lift: inset 0 0 0 1px var(--color-rule), 0 12px 24px -16px oklch(5% 0.01 175 / 0.8);
-  --rim: 0 0 0 1px var(--color-rule), 0 3px 0 oklch(11% 0.01 175);
+  --rim: 0 0 0 1px var(--color-rule);
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -96,10 +99,11 @@
     --p-sat: oklch(40% 0.05 270); --p-sun: oklch(40% 0.05 322); --p-mon: oklch(40% 0.055 22); --p-tue: oklch(41% 0.055 64);
     --p-wed: oklch(42% 0.055 98); --p-thu: oklch(41% 0.06 165); --p-fri: oklch(41% 0.05 212);
     --plastic-alpha: 70%;
+    --color-hero: oklch(26% 0.045 176); --color-hero-2: oklch(32% 0.052 176); --color-hero-ink: oklch(95% 0.012 168); --color-hero-muted: oklch(80% 0.03 172);
     --light: oklch(24% 0.02 175); --glint: oklch(70% 0.03 170 / 0.28); --scrim: oklch(8% 0.01 175 / 0.66);
     --grain: none;
     --shadow-card: inset 0 0 0 1px var(--color-rule); --shadow-lift: inset 0 0 0 1px var(--color-rule), 0 12px 24px -16px oklch(5% 0.01 175 / 0.8);
-    --rim: 0 0 0 1px var(--color-rule), 0 3px 0 oklch(11% 0.01 175);
+    --rim: 0 0 0 1px var(--color-rule);
     color-scheme: dark;
   }
 }

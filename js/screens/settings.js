@@ -8,7 +8,7 @@ import { askPermission } from '../reminders.js';
 import { go } from '../router.js';
 import { t as tr } from '../i18n.js';
 
-const tool = (href, ic, label, color) => `<a class="tool" href="${href}"><span class="dot" style="background:${color}">${icon(ic)}</span>${label}</a>`;
+const tool = (href, ic, label, color) => `<a class="tool" href="${href}"><span class="dot" style="--c:${color}">${icon(ic)}</span>${label}</a>`;
 
 export function more(el) {
   const draw = () => {
@@ -16,14 +16,15 @@ export function more(el) {
     const books = db.all('books').sort((a, b) => (a.kind === 'personal' ? -1 : 1) - (b.kind === 'personal' ? -1 : 1));
     el.innerHTML = `<a class="card row" href="#/voice" style="text-decoration:none;color:inherit;background:var(--saffron-soft)"><span class="mic" style="width:48px;height:48px">${icon('mic')}</span><div class="grow"><b>ভয়েস থেকে লেখা</b><div class="small muted">বাংলা বা ইংরেজিতে বলুন — লেখা হয়ে যাবে। কপি করুন, নামান বা নোটে রাখুন।</div></div>${icon('right')}</a>
     <div class="tools" style="margin-bottom:16px">
-      ${tool('#/voice', 'mic', 'ভয়েস থেকে লেখা', '#b45309')}${s.walletsOff ? '' : tool('#/wallets', 'wallet', 'ওয়ালেট', '#13803d')}${tool('#/stats', 'chart', 'বিশ্লেষণ', '#1d5fa8')}${tool('#/report', 'file', 'রিপোর্ট / PDF', '#0d6b5e')}
+      ${tool('#/budget', 'pie', 'বাজেট', '#0d6b5e')}${tool('#/savings', 'piggy', 'সঞ্চয়', '#13803d')}${tool('#/notes', 'note', 'নোট', '#1d5fa8')}${tool('#/alarms', 'alarm', 'অ্যালার্ম', '#c2352b')}
+      ${s.walletsOff ? '' : tool('#/wallets', 'wallet', 'ওয়ালেট', '#13803d')}${tool('#/stats', 'chart', 'বিশ্লেষণ', '#1d5fa8')}${tool('#/report', 'file', 'রিপোর্ট / PDF', '#0d6b5e')}
       ${tool('#/categories', 'tag', 'ক্যাটাগরি', '#7c3aed')}${tool('#/quick', 'bolt', 'কুইক এন্ট্রি', '#b45309')}${tool('#/recurring', 'repeat', 'নিয়মিত লেনদেন', '#0e7490')}
-      ${tool('#/alarms', 'alarm', 'অ্যালার্ম', '#c2352b')}${tool('#/inbox', 'bell', 'নোটিফিকেশন', '#be185d')}${tool('#/settings', 'gear', 'সেটিংস', '#4d5b57')}
+      ${tool('#/inbox', 'bell', 'নোটিফিকেশন', '#be185d')}${tool('#/settings', 'gear', 'সেটিংস', '#4d5b57')}
     </div>
     <div class="card flat row"><span class="grow">${icon('eye')} প্রাইভেসি মোড (টাকা ঝাপসা)</span><label class="switch"><input type="checkbox" id="pv" ${s.privacy ? 'checked' : ''} aria-label="প্রাইভেসি মোড"><span></span></label></div>
     <div class="row" style="margin:16px 0 8px"><h2 class="grow small" style="margin:0">খাতাসমূহ <span class="tag">${bn(books.length)}</span></h2><button class="btn sm secondary" id="addb">${icon('plus')} নতুন খাতা</button></div>
     <p class="xs muted" style="margin-top:0">ব্যক্তিগত, পরিবার, দোকান, অফিস — আলাদা খাতায় আলাদা হিসাব। কাজ, নোট আর অ্যালার্ম সব খাতায় একই থাকে।</p>
-    <div class="list">${books.map((b) => { const on = b.id === s.activeBookId; return `<div class="item" style="${on ? 'background:var(--accent-soft)' : ''}"><button class="grow row" data-b="${b.id}" style="background:none;border:0;text-align:left;cursor:pointer;padding:0"><span class="dot" style="background:${on ? 'var(--accent)' : 'var(--border-input)'}">${on ? icon('check') : icon('book')}</span><div class="grow"><div style="${on ? 'font-weight:700;color:var(--accent)' : ''}">${esc(b.name)}</div><div class="xs muted">${b.kind === 'personal' ? 'মূল খাতা' : 'অতিরিক্ত খাতা'}</div></div></button><button class="icon-btn" data-eb="${b.id}" aria-label="খাতা বদলান">${icon('edit')}</button></div>`; }).join('')}</div>
+    <div class="list">${books.map((b) => { const on = b.id === s.activeBookId; return `<div class="item" style="${on ? 'background:var(--accent-soft)' : ''}"><button class="grow row" data-b="${b.id}" style="background:none;border:0;text-align:left;cursor:pointer;padding:0"><span class="dot" style="--c:${on ? 'var(--accent)' : 'var(--border-input)'}">${on ? icon('check') : icon('book')}</span><div class="grow"><div style="${on ? 'font-weight:700;color:var(--accent)' : ''}">${esc(b.name)}</div><div class="xs muted">${b.kind === 'personal' ? 'মূল খাতা' : 'অতিরিক্ত খাতা'}</div></div></button><button class="icon-btn" data-eb="${b.id}" aria-label="খাতা বদলান">${icon('edit')}</button></div>`; }).join('')}</div>
     <p class="xs muted" style="text-align:center;margin-top:24px">কথাখাতা · সব তথ্য শুধু এই ডিভাইসে থাকে · সেটিংস থেকে নিয়মিত ব্যাকআপ নিন · <a href="privacy.html">গোপনীয়তা নীতি</a></p>`;
     el.querySelector('#pv').onchange = async (e) => { await db.saveSettings({ privacy: e.target.checked }); document.body.classList.toggle('privacy', e.target.checked); };
     el.querySelectorAll('[data-b]').forEach((b) => b.onclick = async () => { await db.saveSettings({ activeBookId: b.dataset.b }); toast(`খাতা: ${db.get('books', b.dataset.b).name}`); go('#/'); });
@@ -122,6 +123,9 @@ export function applyTheme() {
   const t = db.settings().theme || 'system';
   if (t === 'system') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
   document.body.classList.toggle('privacy', !!db.settings().privacy);
+  // the phone's status bar takes the colour of the paper
+  const dark = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0c1412' : '#f8f5ee');
 }
 
 export function lockScreen() {

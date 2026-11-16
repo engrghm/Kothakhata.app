@@ -119,6 +119,8 @@ const P = {
   sparkle: '<path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>',
   calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
   filter: '<path d="M3 5h18l-7 8v6l-4 2v-8z"/>',
+  in: '<path d="M17 7 7 17"/><path d="M7 9v8h8"/>',
+  out: '<path d="M7 17 17 7"/><path d="M9 7h8v8"/>',
   copy: '<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',
 };
 export const icon = (n, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${P[n] || ''}</svg>`;

@@ -30,6 +30,8 @@ const TABS = [
   ['#/alarms', 'alarm', 'অ্যালার্ম', ['/alarms']],
   ['#/more', 'menu', 'আরও', ['/more', '/wallets', '/quick', '/recurring', '/settings', '/inbox']],
 ];
+// on a phone the menu is a dock of five; the other sections open from "আরও"
+const DOCK = ['#/', '#/lenden', '#/voice', '#/tasks', '#/more'];
 
 route('/', money.home);
 route('/add', (el, p) => money.editTxn(el, null, p));
@@ -63,7 +65,7 @@ function shell() {
       <a class="icon-btn" href="#/inbox" id="bell" aria-label="নোটিফিকেশন">${icon('bell')}</a>
       <a class="icon-btn" href="#/settings" aria-label="সেটিংস">${icon('gear')}</a>
     </div></div>
-    <nav class="tabs" aria-label="প্রধান মেনু">${TABS.map(([h, ic, l]) => `<a class="tab" href="${h}" data-tab="${h}">${icon(ic)}<span>${l}</span></a>`).join('')}</nav>
+    <nav class="tabs" aria-label="প্রধান মেনু">${TABS.map(([h, ic, l]) => `<a class="tab" href="${h}" data-tab="${h}"${DOCK.includes(h) ? ' data-dock' : ''}>${icon(ic)}<span>${l}</span></a>`).join('')}</nav>
   </header>
   <main id="main" tabindex="-1"></main><div class="fab" id="fab"></div>`;
   document.getElementById('book').onclick = () => go('#/more');
@@ -90,16 +92,25 @@ function header(r) {
   const n = M.unread();
   document.getElementById('bell').innerHTML = icon('bell') + (n ? `<span class="badge">${bn(n > 9 ? '9+' : n)}</span>` : '');
   document.getElementById('bell').setAttribute('aria-label', n ? `${n}টি নতুন নোটিফিকেশন` : 'নোটিফিকেশন');
+  let tucked = false;
   for (const a of document.querySelectorAll('.tab')) {
     const t = TABS.find((x) => x[0] === a.dataset.tab);
     const on = t[3].some((p) => (p === '/' ? r.path === '/' : r.path === p || r.path.startsWith(p + '/')));
     a.classList.toggle('on', on); on ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current');
-    if (on) { const nav = a.parentElement; nav.scrollLeft = a.offsetLeft - (nav.clientWidth - a.clientWidth) / 2; }
+    if (on && !DOCK.includes(t[0])) tucked = true;
   }
+  document.querySelector('.tab[data-tab="#/more"]').classList.toggle('on-dock', tucked);
 }
 
 let lastPath = '';
+// a new screen fades up into place; the same screen redrawing does not move
 function render(r) {
+  const move = lastPath && r.path !== lastPath && document.startViewTransition && document.visibilityState === 'visible' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!move) return paint(r);
+  const vt = document.startViewTransition(() => paint(r));
+  for (const p of [vt.ready, vt.finished, vt.updateCallbackDone]) p.catch(() => {}); // a skipped animation is not an error
+}
+function paint(r) {
   const main = document.getElementById('main');
   const fab = document.getElementById('fab');
   fab.innerHTML = '';

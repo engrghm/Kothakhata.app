@@ -1,5 +1,5 @@
 // কথাখাতা service worker: offline cache + notification clicks.
-const CACHE = 'kothakhata-v2';
+const CACHE = 'kothakhata-v4';
 const FILES = ['./', 'index.html', 'css/tokens.css', 'privacy.html', 'manifest.webmanifest', 'css/app.css', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
   'js/app.js', 'js/i18n.js', 'js/db.js', 'js/model.js', 'js/util.js', 'js/ui.js', 'js/voice.js', 'js/reminders.js', 'js/router.js',
   'js/screens/money.js', 'js/screens/plans.js', 'js/screens/life.js', 'js/screens/settings.js', 'js/screens/voicepad.js'];
